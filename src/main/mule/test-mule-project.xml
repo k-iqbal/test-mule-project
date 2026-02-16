@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f8e00e29-b6a6-4513-8adb-05ca876734d3" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="63727507-901a-467d-9539-07c1e29cbef1" file="config\project.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="1871f6a6-745f-4920-a5f0-af28ba054ab8" file="config/common-properties.yaml" key="${secure.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<flow name="test-mule-projectFlow" doc:id="b9953f2d-d3c1-4b65-ba3b-7288f9676ea3" >
+		<http:listener doc:name="Listener" doc:id="9e8e984f-d291-4579-9a3f-a1e95930ce4f" config-ref="HTTP_Listener_config" path="/test100"/>
+		<set-variable value="${secure::anypoint.username}" doc:name="Set Variable" doc:id="a565d32c-1f47-4319-8a47-6f11cac3e42e" variableName="secureVariableVal"/>
+		<logger level="INFO" doc:name="Logger" doc:id="db95ac41-12c8-4c40-adc1-45ec9259cdd4" message='#[%dw 2.0&#10;output application/json&#10;---&#10;&#10;{&#10;	"dummyVarFromProperty": p("extglobal.dummyVar"),&#10;	"anypointUserFromSecureProp": vars.secureVariableVal&#10;	&#10;}]'/>
+	</flow>
+</mule>
