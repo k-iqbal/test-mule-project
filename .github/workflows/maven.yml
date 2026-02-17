@@ -13,13 +13,21 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+env:
+  ANYPOINT_USERNAME: ${{ vars.ANYPOINT_PLATFORM_USERNAME }}
+  ANYPOINT_PASSWORD: ${{ vars.ANYPOINT_PLATFORM_PASSWORD }}
+  SECURE_KEY: ${{ secrets.SECRET_KEY }}
+  
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout variables
+      run: |
+          echo "Username is: $ANYPOINT_USERNAME"
+      
     - name: Checkout code repo
       uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -29,4 +37,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean deploy -DmuleDeploy -Dusername=${{ vars.ANYPOINT_PLATFORM_USERNAME }} -Dpassword=${{ vars.ANYPOINT_PLATFORM_PASSWORD }} -Dsecure.key=${{ secrets.SECRET_KEY }} --file pom.xml -s .maven/settings.xml
+      run: mvn clean deploy -DmuleDeploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD -Dsecure.key=$SECURE_KEY --file pom.xml -s .maven/settings.xml
