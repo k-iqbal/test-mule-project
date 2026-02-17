@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<settings>
+
+  <pluginGroups>
+    <pluginGroup>org.mule.tools</pluginGroup>
+  </pluginGroups>
+
+  <servers>
+	<server>
+	  <id>mulesoft-releases</id>
+	  <username>${username}</username>
+      <password>${password}</password>
+	</server>
+
+    <server>
+      <id>anypoint-exchange-v3</id>
+      <username>${username}</username>
+      <password>${password}</password>
+    </server>
+  </servers>
+  
+</settings>
