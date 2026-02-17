@@ -29,4 +29,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean deploy -DmuleDeploy -Dusername=${{vars.ANYPOINT_PLATFORM_USERNAME}} -Dpassword=${{vars.ANYPOINT_PLATFORM_PASSWORD}} -Dsecure.key=${{secrets.SECRET_KEY}} --file pom.xml -s .maven/settings.xml
+      run: mvn clean deploy -DmuleDeploy -Dusername=${{ vars.ANYPOINT_PLATFORM_USERNAME }} -Dpassword=${{ vars.ANYPOINT_PLATFORM_PASSWORD }} -Dsecure.key=${{ secrets.SECRET_KEY }} --file pom.xml -s .maven/settings.xml
