@@ -46,3 +46,10 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean deploy -DmuleDeploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD -Dsecure.key=$SECURE_KEY --file pom.xml -s .maven/settings.xml
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: mule-app-jar
+        path: target/*.jar
+      
