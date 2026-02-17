@@ -20,7 +20,7 @@ env:
   
 jobs:
   build:
-
+    environment: SANDBOX
     runs-on: ubuntu-latest
 
     steps:
