@@ -3,4 +3,4 @@ http:
   port: "8081"
 
 extglobal:
-  dummyVar: "ABC123"
+  dummyVar: "ABC123XYZ"
