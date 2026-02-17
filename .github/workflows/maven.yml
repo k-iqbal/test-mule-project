@@ -10,9 +10,9 @@ name: Cloud Hub 2 deployment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "development" ]
 env:
   ANYPOINT_USERNAME: ${{ vars.ANYPOINT_PLATFORM_USERNAME }}
   ANYPOINT_PASSWORD: ${{ vars.ANYPOINT_PLATFORM_PASSWORD }}
@@ -31,7 +31,7 @@ jobs:
     - name: Checkout code repo
       uses: actions/checkout@v4
       with:
-        ref: main
+        ref: development
         fetch-depth: 0
 
     - name: Show commit
