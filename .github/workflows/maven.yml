@@ -44,7 +44,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    
+    - name: Deploy to exchange
+      run: mvn clean deploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD --file pom.xml -s .maven/settings.xml
+    
+    - name: Deploy to runtime
       run: mvn clean deploy -DmuleDeploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD -Dsecure.key=$SECURE_KEY --file pom.xml -s .maven/settings.xml
 
     - name: Upload JAR artifact
