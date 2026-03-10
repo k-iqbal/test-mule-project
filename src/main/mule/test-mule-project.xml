@@ -15,6 +15,6 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<flow name="test-mule-projectFlow" doc:id="b9953f2d-d3c1-4b65-ba3b-7288f9676ea3" >
 		<http:listener doc:name="Listener" doc:id="9e8e984f-d291-4579-9a3f-a1e95930ce4f" config-ref="HTTP_Listener_config" path="/test100"/>
 		<set-variable value="${secure::anypoint.username}" doc:name="Set Variable" doc:id="a565d32c-1f47-4319-8a47-6f11cac3e42e" variableName="secureVariableVal"/>
-		<logger level="INFO" doc:name="Logger" doc:id="db95ac41-12c8-4c40-adc1-45ec9259cdd4" message='#[%dw 2.0&#10;output application/json&#10;---&#10;&#10;{&#10;	"dummyVarFromProperty": p("extglobal.dummyVar"),&#10;	"anypointUserFromSecureProp": vars.secureVariableVal&#10;	&#10;}]'/>
+		<logger level="INFO" doc:name="Logger" doc:id="db95ac41-12c8-4c40-adc1-45ec9259cdd4" message='#[%dw 2.0&#10;output application/json&#10;---&#10;&#10;{&#10;	"dummyVarFromProperty": p("extglobal.dummyVar"),&#10;	"anypointUserFromSecureProp": vars.secureVariableVal,&#10;	"info" : "this is a test information"&#10;	&#10;}]'/>
 	</flow>
 </mule>
