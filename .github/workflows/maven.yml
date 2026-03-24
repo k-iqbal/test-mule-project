@@ -10,9 +10,9 @@ name: Cloud Hub 2 deployment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "development" ]
 env:
   ANYPOINT_USERNAME: ${{ vars.ANYPOINT_PLATFORM_USERNAME }}
   ANYPOINT_PASSWORD: ${{ vars.ANYPOINT_PLATFORM_PASSWORD }}
@@ -31,7 +31,7 @@ jobs:
     - name: Checkout code repo
       uses: actions/checkout@v4
       with:
-        ref: main
+        ref: development
         fetch-depth: 0
 
     - name: Show commit
@@ -44,5 +44,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    
+    - name: Deploy to exchange
+      run: mvn clean deploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD --file pom.xml -s .maven/settings.xml
+    
+    - name: Deploy to runtime
       run: mvn clean deploy -DmuleDeploy -Dusername=$ANYPOINT_USERNAME -Dpassword=$ANYPOINT_PASSWORD -Dsecure.key=$SECURE_KEY --file pom.xml -s .maven/settings.xml
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mule-app-jar
+        path: target/*.jar
+      
